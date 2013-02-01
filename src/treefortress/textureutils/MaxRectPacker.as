@@ -22,26 +22,23 @@ package treefortress.textureutils
 	
 	public class MaxRectPacker
 	{
-		//public var usedRectangles:FastList<Rectangle>;
 		public var freeRectangles:Vector.<Rectangle>;
 		
-		private var binWidth:Number;
-		private var binHeight:Number;
+		protected var binWidth:Number;
+		protected var binHeight:Number;
 		
-		public function MaxRectPacker(width:Number, height:Number):void
-		{
+		public function MaxRectPacker(width:Number, height:Number):void {
 			init(width, height);
 		}
 		
-		public function init(width:Number, height:Number):void 
-		{
+		public function init(width:Number, height:Number):void {
 			binWidth = width;
 			binHeight = height;
 			freeRectangles = new <Rectangle>[];
 			freeRectangles.push(new Rectangle(0, 0, width, height));
 		}
-		public function quickInsert(width:Number, height:Number):Rectangle
-		{
+		
+		public function quickInsert(width:Number, height:Number):Rectangle {
 			var newNode:Rectangle = quickFindPositionForNewNodeBestAreaFit(width, height);
 			
 			if (newNode.height == 0) {
@@ -50,8 +47,7 @@ package treefortress.textureutils
 			
 			var numRectanglesToProcess:int = freeRectangles.length;
 			var i:int = 0;
-			while (i < numRectanglesToProcess)
-			{
+			while (i < numRectanglesToProcess) {
 				if (splitFreeNode(freeRectangles[i], newNode)) {
 					freeRectangles.splice(i, 1);
 					--numRectanglesToProcess;
@@ -89,7 +85,7 @@ package treefortress.textureutils
 			return bestNode;
 		}
 		
-		private function splitFreeNode(freeNode:Rectangle, usedNode:Rectangle):Boolean {
+		protected function splitFreeNode(freeNode:Rectangle, usedNode:Rectangle):Boolean {
 			var newNode:Rectangle;
 			// Test with SAT if the rectangles even intersect.
 			if (usedNode.x >= freeNode.x + freeNode.width ||
@@ -131,20 +127,17 @@ package treefortress.textureutils
 			return true;
 		}
 		
-		private function pruneFreeList():void 
-		{
+		protected function pruneFreeList():void  {
 			// Go through each pair and remove any rectangle that is redundant.
 			var i:int = 0;
 			var j:int = 0;
 			var len:int = freeRectangles.length;
 			var tmpRect:Rectangle;
 			var tmpRect2:Rectangle;
-			while (i < len)
-			{
+			while (i < len) {
 				j = i + 1;
 				tmpRect = freeRectangles[i];
-				while (j < len)
-				{
+				while (j < len) {
 					tmpRect2 = freeRectangles[j];
 					if (isContainedIn(tmpRect,tmpRect2)) {
 						freeRectangles.splice(i, 1);
@@ -164,8 +157,7 @@ package treefortress.textureutils
 		}
 		
 		[Inline]
-		final protected function isContainedIn(a:Rectangle, b:Rectangle):Boolean
-		{
+		final protected function isContainedIn(a:Rectangle, b:Rectangle):Boolean {
 			return a.x >= b.x && a.y >= b.y	&& a.x + a.width <= b.x + b.width && a.y + a.height <= b.y + b.height;
 		}
 	}
