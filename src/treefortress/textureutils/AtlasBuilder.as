@@ -48,7 +48,7 @@ package treefortress.textureutils
 				//Create XML line item for TextureAtlas
 				subText = '<SubTexture name="'+name+'" ' +
 					'x="'+rect.x+'" y="'+rect.y+'" width="'+rect.width+'" height="'+rect.height+'" frameX="0" frameY="0" ' +
-					'frameWidth="'+rect.width+'" frameHeight="'+rect.width+'"/>';
+					'frameWidth="'+rect.width+'" frameHeight="'+rect.height+'"/>';
 				atlasText = atlasText + subText;
 			}
 			
